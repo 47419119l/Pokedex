@@ -61,7 +61,7 @@ public class ApiCall {
             String idPoke = String.valueOf(i);
             String nombre = (String) objJSimple.get("name");
             //insertat pokemon
-            insertSQLite.insertPokemon(idPoke, nombre);
+            DAOPokemondb.insertPokemon(idPoke, nombre);
             JSONArray arrayJsonMoves = (JSONArray) objJSimple.get("moves");
 
             for(int y=0; y<arrayJsonMoves.size();y++){
@@ -79,8 +79,8 @@ public class ApiCall {
                 /**
                  * Insertem a la base de dades els moviments
                  */
-                insertSQLite.insert_poke_mov(idPoke,idmov);
-                insertSQLite.insertMoves(idmov,namemov,descripcion);
+                DAOPokemondb.insert_poke_mov(idPoke,idmov);
+                DAOPokemondb.insertMoves(idmov,namemov,descripcion);
 
 
             }
@@ -100,8 +100,8 @@ public class ApiCall {
                 /*
                 Inssertem a la BBDD els tipos
                  */
-                insertSQLite.insertpoke_tipo(idPoke, ids);
-                insertSQLite.inserttipo(ids, tipo);
+                DAOPokemondb.insertpoke_tipo(idPoke, ids);
+                DAOPokemondb.inserttipo(ids, tipo);
             }
 
             } catch (Exception e) {
