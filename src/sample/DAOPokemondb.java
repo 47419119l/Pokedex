@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 
 /**
@@ -142,9 +144,9 @@ public class DAOPokemondb {
             /*
             Fem el insert.
              */
-            String sql_insert = "INSERT INTO POKEMONS" +
+            String sql_insert = "INSERT INTO MOVES" +
                     " (ID,DESCRIPTION,NAME) VALUES" +
-                    " (?, ?);";
+                    " (?, ?,?);";
 
             PreparedStatement preparedStatement = c.prepareStatement(sql_insert);
             preparedStatement.setString(1, ID);
@@ -185,7 +187,7 @@ public class DAOPokemondb {
             /*
             Fem el insert.
              */
-            String sql_insert = "INSERT INTO POK_TIP" +
+            String sql_insert = "INSERT INTO POK_MOV" +
                     " (ID_POK,ID_MOVE) VALUES" +
                     " (?, ?);";
 
@@ -288,6 +290,139 @@ public class DAOPokemondb {
         } catch (SQLException e) {
             System.out.print("");
         }
+    }
+
+    /**
+     * Llista els pokemons que hi ha al BBDD
+     * @param list
+     */
+    public static void llistatPokemon(ObservableList list){
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM POKEMONS;" );
+            while ( rs.next() ) {
+
+                String name = rs.getString("NAME");
+                list.add("\n"+name+"\n");
+
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+    public static void llistatMov(ObservableList list){
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM  MOVES;" );
+            while ( rs.next() ) {
+
+                String name = rs.getString("NAME");
+                String descrip=rs.getString("DESCRIPTION");
+
+
+               list.add(name+"\n\n"+descrip);
+
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Llistat del tipos depenent del pokemon que sigui.
+     * @param id
+     * @return
+     */
+    public static String llistatTipo(String id){
+        String names = null;
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM  TIPO;" );
+            while ( rs.next() ) {
+
+                String name = rs.getString("NAME");
+                names= name+"\n"+name;
+                System.out.println(name);
+
+                // list.add(name+"\n   +"+descrip);
+
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        return names;
+    }
+
+    /**
+     * Extreure un pokemon en concret depenent del seu id
+     * @param id
+     * @return
+     */
+    public static String nomPokemon(String id){
+       String nom=null;
+       Connection c = null;
+       Statement stmt = null;
+       try {
+           Class.forName("org.sqlite.JDBC");
+           c = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
+           c.setAutoCommit(false);
+           stmt = c.createStatement();
+
+           String sqlselect ="SELECT * FROM  POKEMONS WHERE ID = ?" ;
+           PreparedStatement preparedStatement = c.prepareStatement(sqlselect);
+           preparedStatement.setString(1, id);
+           ResultSet rs = preparedStatement.executeQuery(sqlselect);
+           while ( rs.next() ) {
+
+               String name = rs.getString("NAME");
+
+               System.out.println(name);
+
+               // list.add(name+"\n   +"+descrip);
+
+           }
+           rs.close();
+           stmt.close();
+           c.close();
+       } catch ( Exception e ) {
+           System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+           System.exit(0);
+       }
+       return nom;
+   }
+    public static void main(String[] args)
+    {
 
     }
 }

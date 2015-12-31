@@ -111,6 +111,7 @@ public class ApiCall {
     }
 
     public static void main(String[] args) {
+      //  DAOPokemondb.crearPokemondb();
         extreureInformacioJson();
     }
 
