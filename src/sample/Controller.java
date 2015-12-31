@@ -18,17 +18,31 @@ public class Controller {
     @FXML
     ListView llistaMov = new ListView();
     @FXML
+    ListView listtype = new ListView();
+    @FXML
     ImageView ImagePokemon;
     @FXML
-    Text nomPokemon;
+    Text nomPokemon,nom,descrip;
 
     Image image;
 
+    /**
+     * Metode que crida a la funció que s'ha d'executar al iniciar l'aplicació
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
     public void initialize() throws IOException, SAXException, ParserConfigurationException {
-
-        refresh();
+        iniciar();
     }
-    public void refresh() throws IOException, SAXException, ParserConfigurationException {
+
+    /**
+     * Metode que s'executa per defecte
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
+    public void iniciar() throws IOException, SAXException, ParserConfigurationException {
         /**
          * Omplir llistat de pokemons.
          */
@@ -45,13 +59,24 @@ public class Controller {
         DAOPokemondb.llistatMov(itemsMov);
         llistaMov.setItems(itemsMov);
 
-        //Extreu els tipos.
-      // DAOPokemondb.llistatTipo();
+        listtype.setVisible(true);
+        ObservableList <String> itemsType = FXCollections.observableArrayList();
+        DAOPokemondb.llistatTipo(itemsType);
+        listtype.setItems(itemsType);
 
         //Imatge del pokemon
 
         omplirImatge(ImagePokemon,"1.png");
-       // nomPokemon.setText(DAOPokemondb.nomPokemon("4"));
+        /**
+         *
+         */
+        nomPokemon.setText(DAOPokemondb.nomPokemon("1"));
+        String [] move = new String[2];
+        move = DAOPokemondb.extreuMov("Bind");
+        nom.setText(move[0]);
+        descrip.setText(move[1]);
+
+
 
 
 
@@ -69,5 +94,6 @@ public class Controller {
         imagePokemon.setPreserveRatio(true);
         imagePokemon.setSmooth(true);
         imagePokemon.setCache(true);
+
     }
 }

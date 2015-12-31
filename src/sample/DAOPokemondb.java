@@ -334,10 +334,8 @@ public class DAOPokemondb {
             while ( rs.next() ) {
 
                 String name = rs.getString("NAME");
-                String descrip=rs.getString("DESCRIPTION");
 
-
-               list.add(name+"\n\n"+descrip);
+               list.add("\n"+name+"\n");
 
             }
             rs.close();
@@ -350,11 +348,10 @@ public class DAOPokemondb {
     }
 
     /**
-     * Llistat del tipos depenent del pokemon que sigui.
-     * @param id
-     * @return
+     *
+     * @param list
      */
-    public static String llistatTipo(String id){
+    public static void llistatTipo(ObservableList list){
         String names = null;
         Connection c = null;
         Statement stmt = null;
@@ -368,10 +365,8 @@ public class DAOPokemondb {
             while ( rs.next() ) {
 
                 String name = rs.getString("NAME");
-                names= name+"\n"+name;
-                System.out.println(name);
+                list.add("\n"+name+"\n");
 
-                // list.add(name+"\n   +"+descrip);
 
             }
             rs.close();
@@ -381,7 +376,40 @@ public class DAOPokemondb {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        return names;
+
+    }
+    public static String[] extreuMov(String name){
+        String moves[]= new String[2];
+        String nom=null;
+        String descrip=null;
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs;
+            rs = stmt.executeQuery("SELECT * FROM MOVES WHERE NAME = '"+name+"'");
+            while ( rs.next() ) {
+
+                nom = rs.getString("NAME");
+                descrip=rs.getString("DESCRIPTION");
+
+
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        moves[0]=nom;
+        moves[1]=descrip;
+
+        return moves;
     }
 
     /**
@@ -390,7 +418,8 @@ public class DAOPokemondb {
      * @return
      */
     public static String nomPokemon(String id){
-       String nom=null;
+
+        String nom=null;
        Connection c = null;
        Statement stmt = null;
        try {
@@ -398,18 +427,11 @@ public class DAOPokemondb {
            c = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
            c.setAutoCommit(false);
            stmt = c.createStatement();
-
-           String sqlselect ="SELECT * FROM  POKEMONS WHERE ID = ?" ;
-           PreparedStatement preparedStatement = c.prepareStatement(sqlselect);
-           preparedStatement.setString(1, id);
-           ResultSet rs = preparedStatement.executeQuery(sqlselect);
+           ResultSet rs;
+           rs = stmt.executeQuery("SELECT * FROM POKEMONS WHERE ID = '"+id+"'");
            while ( rs.next() ) {
 
-               String name = rs.getString("NAME");
-
-               System.out.println(name);
-
-               // list.add(name+"\n   +"+descrip);
+               nom = rs.getString("NAME");
 
            }
            rs.close();
