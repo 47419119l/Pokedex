@@ -55,37 +55,10 @@ public class Controller {
         DAOPokemondb.llistatPokemon(items);
         ListPokemon.setItems(items);
 
-        /**
-         * Omplir llista de moviments
+        /*
+        Cridem al metode omplirInfo.
          */
-        llistaMov.setVisible(true);
-        ObservableList <String> itemsMov = FXCollections.observableArrayList();
-        DAOPokemondb.llistatMov(itemsMov,1);
-        llistaMov.setItems(itemsMov);
-
-        listtype.setVisible(true);
-        ObservableList <String> itemsType = FXCollections.observableArrayList();
-        DAOPokemondb.llistatTipo(itemsType);
-        listtype.setItems(itemsType);
-
-        //Imatge del pokemon
-
-        omplirImatge(ImagePokemon,"1.png");
-        /**
-         *
-         */
-        nomPokemon.setText(DAOPokemondb.nomPokemon("1"));
-        String [] move;
-        items = llistaMov.getItems();
-        String moveName=  items.get(0).toString().replaceAll("\n", "");
-        move = DAOPokemondb.extreuMov(moveName);
-        nom.setText(move[0]);
-        descrip.setText(move[1]);
-
-
-
-
-
+        omplirInfo (1);
     }
 
     /**
@@ -103,44 +76,97 @@ public class Controller {
 
     }
 
+    /**
+     * Metode quan sel·lecionem un pokemon ens ompli els camps amb a informaació necessaria.
+     * @param event
+     */
     public void escollirPoke(Event event) {
         ListPokemon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                int id = ListPokemon.getSelectionModel().getSelectedIndex() +1;
-                omplirImatge(ImagePokemon,id+".png");
-                /**
-                 *
+                /*
+                Extreiem el id de pokemon sel·lecionat.
                  */
-                nomPokemon.setText(DAOPokemondb.nomPokemon(String.valueOf(id)));
-                String [] move;
-
-                items = llistaMov.getItems();
-                String moveName=  items.get(0).toString().replaceAll("\n", "");
-                move = DAOPokemondb.extreuMov(moveName);
-                nom.setText(move[0]);
-                descrip.setText(move[1]);
-
-                ObservableList <String> itemsMov = FXCollections.observableArrayList();
-                DAOPokemondb.llistatMov(itemsMov,id);
-                llistaMov.setItems(itemsMov);
+                int id = ListPokemon.getSelectionModel().getSelectedIndex() +1;
+                /*
+                Cridem a la funcio omplirInfo
+                 */
+                omplirInfo(id);
             }
         });{
 
         }
     }
 
+    /**
+     * Quan apretem amb e ratolí a un moviment extreu la seva informació
+     * @param event
+     */
     public void escollitMove(Event event) {
+
         llistaMov.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                /*
+                Treiem el nom del movimnt sel·lecionat
+                 */
                 String nomMov = llistaMov.getSelectionModel().getSelectedItems().toString().replaceAll("\n", "").replaceAll("]","").substring(1);
-                String [] move;
-                move = DAOPokemondb.extreuMov(nomMov);
-                nom.setText(move[0]);
-                descrip.setText(move[1]);
+                /*
+                Cridem a la funcio per omplir la info
+                 */
+                infoMov(nomMov);
             }
         });
+    }
+
+    /**
+     * Metode per extreure la informació del move sel·lecionat.
+     * @param nomMov
+     */
+    public void infoMov(String nomMov){
+
+        String [] move;
+        move = DAOPokemondb.extreuMov(nomMov);
+        nom.setText(move[0]);
+        descrip.setText(move[1]);
+    }
+
+    /**
+     * Escriu la informació del pokemon sel·lecionat als caps que li correspon.
+     * @param i
+     */
+    public void omplirInfo (int i){
+        /**
+         * Omplir llista de moviments
+         */
+        llistaMov.setVisible(true);
+        ObservableList <String> itemsMov = FXCollections.observableArrayList();
+        DAOPokemondb.llistatMov(itemsMov,i);
+        llistaMov.setItems(itemsMov);
+
+        /*
+        Omplir llistat de tipos.
+         */
+        listtype.setVisible(true);
+        ObservableList <String> itemsType = FXCollections.observableArrayList();
+        DAOPokemondb.llistatTipo(itemsType,i);
+        listtype.setItems(itemsType);
+
+        /*
+        Cridem a metode per omplir imatges
+         */
+        omplirImatge(ImagePokemon,i+".png");
+        /**
+         *Extreiem le nom del pokemon selecionat.
+         */
+        nomPokemon.setText(DAOPokemondb.nomPokemon(""+i));
+
+        /*
+        Extreiem el nom del primer move de la llista.
+         */
+        items = llistaMov.getItems();
+        String moveName=  items.get(0).toString().replaceAll("\n", "");
+        infoMov(moveName);
+
     }
 }

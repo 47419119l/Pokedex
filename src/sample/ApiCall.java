@@ -110,10 +110,16 @@ public class ApiCall {
         }
     }
 
+    /**
+     * Metode que s'executa quan executem la clase APICALL.
+     * @param args
+     */
     public static void main(String[] args) {
-         DAOPokemondb.crearPokemondb();
-
-         extreureInformacioJson();
+        
+        DAOPokemondb.deletePokemonDB();
+        DAOPokemondb.crearPokemondb();
+        extreureInformacioJson();
     }
+
 
     }

@@ -79,6 +79,13 @@ public class DAOPokemondb {
         }
 
     }
+
+    /**
+     * Metode per eliminar la BBDD.
+     */
+    public static void deletePokemonDB(){
+
+    }
     /**
      * Metode per insertar pokemons.
      * @param ID
@@ -321,22 +328,13 @@ public class DAOPokemondb {
         }
     }
 
+    /**
+     * Metode per consultar els moves que té un pokemon determinat.
+     * @param list
+     * @param ID
+     */
     public static void llistatMov(ObservableList list,int ID){
-        /*
-         String sql_pok_mov = "CREATE TABLE POK_MOV " +
-                        "(ID_POK INT    NOT NULL," +
-                        " ID_MOVE   TEXT    NOT NULL," +
-                        " PRIMARY KEY(ID_POK,ID_POK))";
 
-                stmt.executeUpdate(sql_pok_mov);
-
-
-        String sql_moves = "CREATE TABLE MOVES " +
-                "(ID TEXT  PRIMARY KEY NOT NULL," +
-                " DESCRIPTION TEXT NOT NULL,"+
-                " NAME TEXT    NOT NULL)";
-
-        */
         Connection c = null;
         Statement stmt = null;
         try {
@@ -368,10 +366,11 @@ public class DAOPokemondb {
     }
 
     /**
-     *
+     * Metode per consltar els tipos que té un  pokemon determinat.
      * @param list
+     * @param ID
      */
-    public static void llistatTipo(ObservableList list){
+    public static void llistatTipo(ObservableList list,int ID){
         String names = null;
         Connection c = null;
         Statement stmt = null;
@@ -379,9 +378,10 @@ public class DAOPokemondb {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
             c.setAutoCommit(false);
-
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM  TIPO;" );
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM  TIPO " +
+                    "INNER JOIN POK_TIP ON TIPO.ID = POK_TIP.ID_TIPO" +
+                    " WHERE POK_TIP.ID_POK = '"+ID+"'" );
             while ( rs.next() ) {
 
                 String name = rs.getString("NAME");
@@ -398,6 +398,12 @@ public class DAOPokemondb {
         }
 
     }
+
+    /**
+     * Retorna un array amb el nom del move i la descripcio
+     * @param name
+     * @return String [] move
+     */
     public static String[] extreuMov(String name){
         String moves[]= new String[2];
         String nom=null;
@@ -464,8 +470,5 @@ public class DAOPokemondb {
        }
        return nom;
    }
-    public static void main(String[] args)
-    {
 
-    }
 }
