@@ -44,7 +44,7 @@ public class ApiCall {
      */
     public static void extreureInformacioJson(){
 
-    for(int i=1;i<10;i++) {
+    for(int i=1;i<30;i++) {
 
         String peticioPeli = urlBase+"/api/v1/pokemon/" + i;
 
@@ -111,8 +111,9 @@ public class ApiCall {
     }
 
     public static void main(String[] args) {
-      //  DAOPokemondb.crearPokemondb();
-        extreureInformacioJson();
+         DAOPokemondb.crearPokemondb();
+
+         extreureInformacioJson();
     }
 
     }

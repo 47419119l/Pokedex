@@ -36,7 +36,7 @@ public class DAOPokemondb {
                  * Enllaça els pokemons amb els ses tipus
                  */
                 String sql_pok_tip = "CREATE TABLE POK_TIP " +
-                        "(ID_POK INT    NOT NULL," +
+                        "(ID_POK TEXT    NOT NULL," +
                         " ID_TIPO   TEXT    NOT NULL," +
                         " PRIMARY KEY(ID_POK,ID_TIPO))";
 
@@ -53,9 +53,9 @@ public class DAOPokemondb {
                  * Taula que enllaça els movimets amb els pokemons
                  */
                 String sql_pok_mov = "CREATE TABLE POK_MOV " +
-                        "(ID_POK INT    NOT NULL," +
+                        "(ID_POK TEXT    NOT NULL," +
                         " ID_MOVE   TEXT    NOT NULL," +
-                        " PRIMARY KEY(ID_POK,ID_POK))";
+                        " PRIMARY KEY(ID_MOVE,ID_POK))";
 
                 stmt.executeUpdate(sql_pok_mov);
 
@@ -321,7 +321,22 @@ public class DAOPokemondb {
         }
     }
 
-    public static void llistatMov(ObservableList list){
+    public static void llistatMov(ObservableList list,int ID){
+        /*
+         String sql_pok_mov = "CREATE TABLE POK_MOV " +
+                        "(ID_POK INT    NOT NULL," +
+                        " ID_MOVE   TEXT    NOT NULL," +
+                        " PRIMARY KEY(ID_POK,ID_POK))";
+
+                stmt.executeUpdate(sql_pok_mov);
+
+
+        String sql_moves = "CREATE TABLE MOVES " +
+                "(ID TEXT  PRIMARY KEY NOT NULL," +
+                " DESCRIPTION TEXT NOT NULL,"+
+                " NAME TEXT    NOT NULL)";
+
+        */
         Connection c = null;
         Statement stmt = null;
         try {
@@ -330,7 +345,12 @@ public class DAOPokemondb {
             c.setAutoCommit(false);
 
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM  MOVES;" );
+
+            ResultSet rs = stmt.executeQuery( "SELECT MOVES.NAME FROM MOVES\n" +
+                    "INNER JOIN POK_MOV\n" +
+                    "ON MOVES.ID = POK_MOV.ID_MOVE\n" +
+                    "WHERE POK_MOV.ID_POK = '"+ID+"'\n"
+            );
             while ( rs.next() ) {
 
                 String name = rs.getString("NAME");

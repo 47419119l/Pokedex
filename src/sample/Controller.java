@@ -29,6 +29,7 @@ public class Controller {
 
     Image image;
 
+    ObservableList<String> items = FXCollections.observableArrayList();
     /**
      * Metode que crida a la funció que s'ha d'executar al iniciar l'aplicació
      * @throws IOException
@@ -59,7 +60,7 @@ public class Controller {
          */
         llistaMov.setVisible(true);
         ObservableList <String> itemsMov = FXCollections.observableArrayList();
-        DAOPokemondb.llistatMov(itemsMov);
+        DAOPokemondb.llistatMov(itemsMov,1);
         llistaMov.setItems(itemsMov);
 
         listtype.setVisible(true);
@@ -74,8 +75,10 @@ public class Controller {
          *
          */
         nomPokemon.setText(DAOPokemondb.nomPokemon("1"));
-        String [] move = new String[2];
-        move = DAOPokemondb.extreuMov("Bind");
+        String [] move;
+        items = llistaMov.getItems();
+        String moveName=  items.get(0).toString().replaceAll("\n", "");
+        move = DAOPokemondb.extreuMov(moveName);
         nom.setText(move[0]);
         descrip.setText(move[1]);
 
@@ -110,10 +113,17 @@ public class Controller {
                  *
                  */
                 nomPokemon.setText(DAOPokemondb.nomPokemon(String.valueOf(id)));
-                String [] move = new String[2];
-                move = DAOPokemondb.extreuMov("Bind");
+                String [] move;
+
+                items = llistaMov.getItems();
+                String moveName=  items.get(0).toString().replaceAll("\n", "");
+                move = DAOPokemondb.extreuMov(moveName);
                 nom.setText(move[0]);
                 descrip.setText(move[1]);
+
+                ObservableList <String> itemsMov = FXCollections.observableArrayList();
+                DAOPokemondb.llistatMov(itemsMov,id);
+                llistaMov.setItems(itemsMov);
             }
         });{
 
@@ -121,5 +131,16 @@ public class Controller {
     }
 
     public void escollitMove(Event event) {
+        llistaMov.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                String nomMov = llistaMov.getSelectionModel().getSelectedItems().toString().replaceAll("\n", "").replaceAll("]","").substring(1);
+                String [] move;
+                move = DAOPokemondb.extreuMov(nomMov);
+                nom.setText(move[0]);
+                descrip.setText(move[1]);
+            }
+        });
     }
 }
