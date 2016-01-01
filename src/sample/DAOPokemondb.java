@@ -390,7 +390,8 @@ public class DAOPokemondb {
             c.setAutoCommit(false);
             stmt = c.createStatement();
             ResultSet rs;
-            rs = stmt.executeQuery("SELECT * FROM MOVES WHERE NAME = '"+name+"'");
+            rs = stmt.executeQuery("SELECT * FROM MOVES " +
+                    "WHERE NAME = '"+name+"'");
             while ( rs.next() ) {
 
                 nom = rs.getString("NAME");

@@ -31,9 +31,9 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ListView fx:id="ListPokemon" layoutX="5.0" layoutY="60.0" prefHeight="332.0" prefWidth="178.0" />
+      <ListView fx:id="ListPokemon" layoutX="5.0" layoutY="60.0" onMouseClicked="#escollirPoke" prefHeight="332.0" prefWidth="178.0" />
       <ImageView fx:id="ImagePokemon" fitHeight="135.0" fitWidth="178.0" layoutX="211.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" />
-      <ListView fx:id="llistaMov" layoutX="422.0" layoutY="60.0" prefHeight="208.0" prefWidth="165.0" />
+      <ListView fx:id="llistaMov" layoutX="422.0" layoutY="60.0" onMouseClicked="#escollitMove" prefHeight="208.0" prefWidth="165.0" />
       <AnchorPane layoutX="191.0" layoutY="200.0" prefHeight="200.0" prefWidth="218.0">
          <children>
             <Text fx:id="nomPokemon" layoutX="109.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom del pokemon" />

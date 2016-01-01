@@ -2,10 +2,13 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import org.xml.sax.SAXException;
 
@@ -95,5 +98,28 @@ public class Controller {
         imagePokemon.setSmooth(true);
         imagePokemon.setCache(true);
 
+    }
+
+    public void escollirPoke(Event event) {
+        ListPokemon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int id = ListPokemon.getSelectionModel().getSelectedIndex() +1;
+                omplirImatge(ImagePokemon,id+".png");
+                /**
+                 *
+                 */
+                nomPokemon.setText(DAOPokemondb.nomPokemon(String.valueOf(id)));
+                String [] move = new String[2];
+                move = DAOPokemondb.extreuMov("Bind");
+                nom.setText(move[0]);
+                descrip.setText(move[1]);
+            }
+        });{
+
+        }
+    }
+
+    public void escollitMove(Event event) {
     }
 }
