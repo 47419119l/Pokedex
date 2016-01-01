@@ -353,7 +353,7 @@ public class DAOPokemondb {
 
                 String name = rs.getString("NAME");
 
-               list.add("\n"+name+"\n");
+               list.add(name);
 
             }
             rs.close();
@@ -385,7 +385,7 @@ public class DAOPokemondb {
             while ( rs.next() ) {
 
                 String name = rs.getString("NAME");
-                list.add("\n"+name+"\n");
+                list.add(name);
 
 
             }
@@ -422,6 +422,7 @@ public class DAOPokemondb {
 
                 nom = rs.getString("NAME");
                 descrip=rs.getString("DESCRIPTION");
+
 
 
             }

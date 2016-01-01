@@ -115,10 +115,11 @@ public class ApiCall {
      * @param args
      */
     public static void main(String[] args) {
-        
+
         DAOPokemondb.deletePokemonDB();
         DAOPokemondb.crearPokemondb();
         extreureInformacioJson();
+
     }
 
 
