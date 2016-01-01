@@ -2,6 +2,7 @@ package sample;
 
 import javafx.collections.ObservableList;
 
+import java.io.File;
 import java.sql.*;
 
 /**
@@ -84,7 +85,8 @@ public class DAOPokemondb {
      * Metode per eliminar la BBDD.
      */
     public static void deletePokemonDB(){
-
+        File dbPokemon = new File("pokemon.db");
+        dbPokemon.delete();
     }
     /**
      * Metode per insertar pokemons.

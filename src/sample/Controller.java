@@ -1,10 +1,13 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -61,7 +64,7 @@ public class Controller {
         /*
         Cridem al metode omplirInfo.
          */
-        omplirInfo (1);
+        omplirInfo (25);
     }
 
     /**
@@ -132,6 +135,7 @@ public class Controller {
         move = DAOPokemondb.extreuMov(nomMov);
         nom.setText(move[0]);
         descrip.setText(move[1]);
+
     }
 
     /**
@@ -170,6 +174,41 @@ public class Controller {
         items = llistaMov.getItems();
         String moveName=  items.get(0).toString().replaceAll("\n", "");
         infoMov(moveName);
+
+    }
+
+    /**
+     * Metode about mostra informació sobre l'aplicació
+     * @param actionEvent
+     */
+    public void about(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText("Pokedex Sandra");
+        alert.setContentText("En aquesta aplicació podem veure un llistat de 29 pokemons amb els seus moviments i una descripció de cada un d'ells.");
+        alert.showAndWait();
+    }
+
+    /**
+     * Metode per a tancar l'aplicació
+     * @param actionEvent
+     */
+    public void close(ActionEvent actionEvent) {
+        Platform.exit();
+    }
+
+    public void refresh(ActionEvent actionEvent) {
+        
+        omplirImatge(ImagePokemon,"loading.gif");
+        ListPokemon.setVisible(false);
+        llistaMov.setVisible(false);
+        listtype.setVisible(false);
+        nomPokemon.setVisible(false);
+        descrip.setVisible(false);
+        nom.setVisible(false);
+
+        ApiCall.executar();
+        omplirInfo(1);
 
     }
 }
