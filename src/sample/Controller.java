@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -35,6 +38,8 @@ public class Controller {
     Label descrip;
     @FXML
     AnchorPane pane;
+    @FXML
+    Slider slider;
 
     Image image;
 
@@ -61,6 +66,7 @@ public class Controller {
      * @throws ParserConfigurationException
      */
     public void iniciar() throws IOException, SAXException, ParserConfigurationException {
+        
         /**
          * Omplir llistat de pokemons.
          */

@@ -32,16 +32,15 @@
         </menus>
       </MenuBar>
       <ListView fx:id="ListPokemon" layoutX="14.0" layoutY="70.0" onMouseClicked="#escollirPoke" prefHeight="325.0" prefWidth="172.0" stylesheets="@Theme.css" />
-      <ImageView fx:id="ImagePokemon" fitHeight="168.0" fitWidth="196.0" layoutX="307.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" />
       <ListView fx:id="llistaMov" layoutX="606.0" layoutY="68.0" onMouseClicked="#escollitMove" prefHeight="127.0" prefWidth="165.0" />
       <AnchorPane layoutX="191.0" layoutY="203.0" prefHeight="78.0" prefWidth="218.0">
          <children>
-            <Label layoutX="14.0" layoutY="28.0" text="Pokemon name:">
+            <Label layoutX="14.0" layoutY="34.0" text="Pokemon name:">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="nomPokemon" layoutX="131.0" layoutY="28.0" text="Label" />
+            <Label fx:id="nomPokemon" layoutX="132.0" layoutY="34.0" text="Label" />
             <Label fx:id="nom" layoutX="104.0" layoutY="67.0" text="Label" />
             <Label layoutX="14.0" layoutY="67.0" text="Move name:">
                <font>
@@ -67,5 +66,6 @@
          </font>
       </Label>
       <Label fx:id="descrip" alignment="TOP_LEFT" layoutX="206.0" layoutY="300.0" prefHeight="88.0" prefWidth="562.0" text="Label" />
+      <ImageView fx:id="ImagePokemon" fitHeight="157.0" fitWidth="206.0" layoutX="300.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
