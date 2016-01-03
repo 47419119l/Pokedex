@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.xml.sax.SAXException;
 
@@ -29,9 +30,11 @@ public class Controller {
     @FXML
     ImageView ImagePokemon;
     @FXML
-    Text nomPokemon,nom;
+    Label nomPokemon,nom;
     @FXML
     Label descrip;
+    @FXML
+    AnchorPane pane;
 
     Image image;
 
@@ -43,6 +46,11 @@ public class Controller {
      * @throws ParserConfigurationException
      */
     public void initialize() throws IOException, SAXException, ParserConfigurationException {
+        /*
+        L'hi diem que el AnchorPane en el nostre css es troba amb el ta pane.
+         */
+        pane.getStyleClass().add("pane");
+
         iniciar();
     }
 
@@ -198,7 +206,7 @@ public class Controller {
     }
 
     public void refresh(ActionEvent actionEvent) {
-        
+
         omplirImatge(ImagePokemon,"loading.gif");
         ListPokemon.setVisible(false);
         llistaMov.setVisible(false);
